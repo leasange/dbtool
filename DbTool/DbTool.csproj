@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DE043BA4-7303-4314-ADAE-170E66EFA4A1}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DbTool</RootNamespace>
+    <AssemblyName>DbTool</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>..\libs\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DbClasses\DbDefinition.cs" />
+    <Compile Include="DbClasses\DbTFileConfig.cs" />
+    <Compile Include="DbClasses\DbTFileReader.cs" />
+    <Compile Include="DbClasses\DbTFileWriter.cs" />
+    <Compile Include="DbClasses\DbTypeConverter.cs" />
+    <Compile Include="DbClasses\IConstraintClass.cs" />
+    <Compile Include="DbClasses\DbData.cs" />
+    <Compile Include="DbClasses\ICreateSql.cs" />
+    <Compile Include="DbClasses\IDbClass.cs" />
+    <Compile Include="DbClasses\IDbHelper.cs" />
+    <Compile Include="DbClasses\IFunctionClass.cs" />
+    <Compile Include="DbClasses\IIndexClass.cs" />
+    <Compile Include="DbClasses\IJavaSourceClass.cs" />
+    <Compile Include="DbClasses\IProcedureClass.cs" />
+    <Compile Include="DbClasses\ISequenceClass.cs" />
+    <Compile Include="DbClasses\ISourceClass.cs" />
+    <Compile Include="DbClasses\ITableClass.cs" />
+    <Compile Include="DbClasses\ITriggerClass.cs" />
+    <Compile Include="DbClasses\MyDbHelper.cs" />
+    <Compile Include="DbClasses\Oracle\OracleConstraintClass.cs" />
+    <Compile Include="DbClasses\Oracle\OracleDbClass.cs" />
+    <Compile Include="DbClasses\Oracle\OracleIndexClass.cs" />
+    <Compile Include="DbClasses\Oracle\OracleODACHelper.cs" />
+    <Compile Include="DbClasses\Oracle\OracleSequenceClass.cs" />
+    <Compile Include="DbClasses\Oracle\OracleSourceClass.cs" />
+    <Compile Include="DbClasses\Oracle\OracleTableClass.cs" />
+    <Compile Include="DbClasses\Oracle\OracleTriggerClass.cs" />
+    <Compile Include="DbForms\DataView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DbForms\DataView.Designer.cs">
+      <DependentUpon>DataView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DbForms\DbConnect.cs" />
+    <Compile Include="DbForms\FrmOpenDb.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DbForms\FrmOpenDb.Designer.cs">
+      <DependentUpon>FrmOpenDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DbForms\FrmTableView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DbForms\FrmTableView.Designer.cs">
+      <DependentUpon>FrmTableView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DbForms\SourceTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DbForms\SourceTree.Designer.cs">
+      <DependentUpon>SourceTree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DbForms\FrmDatabase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DbForms\FrmDatabase.Designer.cs">
+      <DependentUpon>FrmDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DbForms\FrmExportDbt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DbForms\FrmExportDbt.Designer.cs">
+      <DependentUpon>FrmExportDbt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DbForms\FrmImportDbt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DbForms\FrmImportDbt.Designer.cs">
+      <DependentUpon>FrmImportDbt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMain.Designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmOracle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmOracle.Designer.cs">
+      <DependentUpon>FrmOracle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DbForms\FrmSqlWin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DbForms\FrmSqlWin.Designer.cs">
+      <DependentUpon>FrmSqlWin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ITableColClass.cs" />
+    <Compile Include="MyControls\DataGridViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyControls\DataGridViewEx.Designer.cs">
+      <DependentUpon>DataGridViewEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyControls\TreeViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyControls\TreeViewEx.Designer.cs">
+      <DependentUpon>TreeViewEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OracleManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OracleManager.Designer.cs">
+      <DependentUpon>OracleManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OracleView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OracleView.Designer.cs">
+      <DependentUpon>OracleView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SequenceView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SequenceView.Designer.cs">
+      <DependentUpon>SequenceView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SourceView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SourceView.Designer.cs">
+      <DependentUpon>SourceView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TableView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TableView.Designer.cs">
+      <DependentUpon>TableView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TriggerView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TriggerView.Designer.cs">
+      <DependentUpon>TriggerView.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="DbForms\DataView.resx">
+      <DependentUpon>DataView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DbForms\FrmOpenDb.resx">
+      <DependentUpon>FrmOpenDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DbForms\FrmTableView.resx">
+      <DependentUpon>FrmTableView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DbForms\SourceTree.resx">
+      <DependentUpon>SourceTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DbForms\FrmDatabase.resx">
+      <DependentUpon>FrmDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DbForms\FrmExportDbt.resx">
+      <DependentUpon>FrmExportDbt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DbForms\FrmImportDbt.resx">
+      <DependentUpon>FrmImportDbt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmOracle.resx">
+      <DependentUpon>FrmOracle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DbForms\FrmSqlWin.resx">
+      <DependentUpon>FrmSqlWin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyControls\DataGridViewEx.resx">
+      <DependentUpon>DataGridViewEx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyControls\TreeViewEx.resx">
+      <DependentUpon>TreeViewEx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OracleManager.resx">
+      <DependentUpon>OracleManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OracleView.resx">
+      <DependentUpon>OracleView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="SequenceView.resx">
+      <DependentUpon>SequenceView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SourceView.resx">
+      <DependentUpon>SourceView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TableView.resx">
+      <DependentUpon>TableView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TriggerView.resx">
+      <DependentUpon>TriggerView.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FastColoredTextBox\FastColoredTextBox.csproj">
+      <Project>{6dd14a85-ccfc-4774-bd26-0f5772512319}</Project>
+      <Name>FastColoredTextBox</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
