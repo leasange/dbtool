@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Syntax>
+  <ReservedWords fontstyle="Bold|Italic">
+    <ReservedWord text="BOOL" type="keyword"/>
+    <ReservedWord text="INT" type="keyword"/>
+    <ReservedWord text="INT16" type="keyword"/>
+    <ReservedWord text="INT32" type="keyword"/>
+    <ReservedWord text="LONG" type="keyword"/>
+    <ReservedWord text="FLOAT" type="keyword"/>
+    <ReservedWord text="DOUBLE" type="keyword"/>
+
+    <ReservedWord text="FALSE" type="keyword"/>
+    <ReservedWord text="TRUE" type="keyword"/>
+    
+    <ReservedWord text="TRY" type="keyword"/>
+    <ReservedWord text="CATCH" type="keyword"/>
+    <ReservedWord text="FOR" type="keyword"/>
+  </ReservedWords>
+
+  <Seperators>
+    <Seperator text=" "/>
+    <Seperator text="\r"/>
+    <Seperator text="\n"/>
+    <Seperator text=","/>
+    <Seperator text=";"/>
+    <Seperator text="."/>
+    <Seperator text=")"/>
+    <Seperator text="("/>
+    <Seperator text="]"/>
+    <Seperator text="["/>
+    <Seperator text="}"/>
+    <Seperator text="{"/>
+    <Seperator text="+"/>
+    <Seperator text="="/>
+    <Seperator text="\t"/>
+  </Seperators>
+
+  <TextBeginEnds>
+    <TextBeginEnd start="&quot;" end="&quot;"  type="ToCloseToken" color="Red" />
+    <TextBeginEnd start="&apos;" end="&apos;"  type="ToCloseToken" color="Red" />
+    <TextBeginEnd start="/*" end="*/" type="ToCloseToken" fontstyle="Italic" color="Green" autocomplete="false"/>
+    <TextBeginEnd start="///" type="ToEOL"  fontstyle="Italic" color="Gray" autocomplete="false"/>
+    <TextBeginEnd start="//" type="ToEOL"  fontstyle="Italic" color="Green" autocomplete="false"/>
+  </TextBeginEnds>
+  
+  <Texts>
+    <Text text="@" type="ToEOW" color="Firebrick" fontstyle="Bold|Italic"/>
+    <Text text=":" type="ToEOW" color="Firebrick" fontstyle="Bold|Italic"/>
+    <Text text="\&quot;[^\&quot;x]*(?:x.[^\&quot;\\]*)*[\&quot;]" type="WordRegEx" color="Red" fontstyle="Italic"/>
+    <Text text="\b(?:[0-9]*\.)?[0-9]+\b" type="WordRegEx" color="Magenta" fontstyle="Bold"/>
+  </Texts>
+  
+</Syntax>
+
