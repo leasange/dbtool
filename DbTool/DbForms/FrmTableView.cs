@@ -140,7 +140,7 @@ namespace DbTool.DbForms
 
         private void btnMore_Click(object sender, EventArgs e)
         {
-            LoadData(dgvData.Rows.Count - 1, 50);
+            LoadData(dgvData.Rows.Count, 50);
         }
 
         private Thread _thread = null;
@@ -160,7 +160,7 @@ namespace DbTool.DbForms
                                 while (true)
                                 {
                                     int count = dgvData.Rows.Count;
-                                    LoadData(dgvData.Rows.Count - 1, 50);
+                                    LoadData(dgvData.Rows.Count, 50);
                                     int count1 = dgvData.Rows.Count;
                                     if (count1 - count < 50)
                                     {

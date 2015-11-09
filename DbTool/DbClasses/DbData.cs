@@ -7,7 +7,14 @@ using System.Text;
 
 namespace DbTool.DbClasses
 {
-    public class DbData:ICreateDataSql
+    /// <summary>
+    /// 数据库数据类型（不使用）
+    /// </summary>
+    public interface IDataDbType
+    {
+
+    }
+    public class DbData : ICreateDataSql
     {
         private TableDataRow _tableDataRow;
         public DbTool.DbClasses.TableDataRow TableDataRow

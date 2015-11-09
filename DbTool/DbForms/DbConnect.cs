@@ -50,21 +50,8 @@ namespace DbTool.DbForms
         public IDbClass GetDbClass()
         {
             IDbClass dbClass = null;
-            string connect = GetConnectString();
-            switch (dbType)
-            {
-                case MyDbType.None:
-                    break;
-                case MyDbType.Oracle:
-                    dbClass = new OracleDbClass(connect);
-                    break;
-                case MyDbType.MySql:
-                    break;
-                case MyDbType.SqlServer:
-                    break;
-                default:
-                    break;
-            }
+            string connectString = GetConnectString();
+            dbClass = MyDbHelper.GetDbClass(connectString, dbType);
             if (dbClass != null)
             {
                 dbClass.Open();

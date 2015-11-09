@@ -159,7 +159,7 @@ namespace DbTool.DbClasses
                 tableColumnTypes[i] = dt.Columns[i].DataType;
                 if (otc != null)
                 {
-                    tableColumnDbTypes[i] =DbTypeConverter.GetOracleDbType(Convert.ToString(((OracleTableColClass)(otc[dt.Columns[i].ColumnName])).data_type),MyDbType.Oracle);
+                    tableColumnDbTypes[i] = MyDbHelper.GetDbDataType(Convert.ToString(((OracleTableColClass)(otc[dt.Columns[i].ColumnName])).data_type), MyDbType.Oracle, MyDbType.Oracle);
                 }
                 else
                 {

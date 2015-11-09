@@ -13,6 +13,10 @@ namespace DbTool.DbForms
     public partial class DataView : UserControl
     {
         private IDbClass _dbClass;
+        //分页
+        private string _sqlFormat = "select * from (select t.*, rownum {0} from ({1}) t where rownum <= {2}) where {0} > {3}";
+        private string _sql = "";
+
         public DbTool.DbClasses.IDbClass DbClass
         {
             get { return _dbClass; }
