@@ -26,6 +26,7 @@ namespace DbTool.DbClasses
 
     public interface IGetAttribute
     {
+        string Name { get; }
         List<NameAliasValue> GetAttributes();
     }
 
@@ -126,7 +127,7 @@ namespace DbTool.DbClasses
             StringBuilder sb = new StringBuilder();
             foreach (CreateSqlObject item in objs)
             {
-                sb.AppendLine(item.ToString()+";");
+                sb.AppendLine(item.ToString().TrimEnd(';')+";");
             }
             return sb.ToString().TrimEnd('\r','\n');
         }

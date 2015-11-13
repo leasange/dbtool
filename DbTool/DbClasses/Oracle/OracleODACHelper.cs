@@ -166,5 +166,46 @@ namespace DbTool.DbClasses.Oracle
             DataSet ds = ExecuteDataSet(sql,prms);
             return ds.Tables[0];
         }
+
+        internal string GetPageSql(string sql, int start, int length)
+        {
+            string sqlFormat = "select * from (select t.*, rownum {0} from ({1}) t where rownum <= {2}) where {0} > {3}";
+            string row = "row" + Guid.NewGuid().ToString("N").Substring(24);
+            string newsql = string.Format(sqlFormat, row, sql, start + length, start);
+            return newsql;
+        }
+        internal DataTable GetPageTable(DataTable dt)
+        {
+            DataTable dtNew = new DataTable();
+            for (int i = 0; i < dt.Columns.Count - 1; i++)
+            {
+                dtNew.Columns.Add(dt.Columns[i].ColumnName, dt.Columns[i].DataType);
+            }
+            foreach (DataRow item in dt.Rows)
+            {
+                DataRow dr = dtNew.NewRow();
+                object[] obj = new object[item.ItemArray.Length - 1];
+                for (int i = 0; i < obj.Length; i++)
+                {
+                    obj[i] = item.ItemArray[i];
+                }
+                dr.ItemArray = obj;
+                dtNew.Rows.Add(dr);
+            }
+            return dtNew;
+        }
+        public DataTable ExecuteDataTable(string sql, int start, int length)
+        {
+            string newsql = GetPageSql(sql, start, length);
+            DataTable dt = ExecuteDataTable(newsql);
+            return GetPageTable(dt);
+        }
+
+        public DataTable ExecuteDataTable(string sql, int start, int length, params object[] prms)
+        {
+            string newsql = GetPageSql(sql, start, length);
+            DataTable dt = ExecuteDataTable(newsql, prms);
+            return GetPageTable(dt);
+        }
     }
 }

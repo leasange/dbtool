@@ -125,10 +125,40 @@ namespace DbTool
                 case EventSourceType.Open:
                     {
                         ITableClass table = e.SourceObject as ITableClass;
-                        if (table!=null)
+                        if (table != null)
                         {
                             FrmTableView tableView = new FrmTableView(_dbClass, table, _dbConnectConfigure.GetSimpleText());
                             FrmMain.Main.ShowOrActiveForm(tableView);
+                        }
+                        else
+                        {
+                            string text = "查看";
+                            switch (e.TreeNodeType)
+                            {
+                                case SourceTree.TreeNodeType.TRIGGER:
+                                    text += "触发器";
+                                    break;
+                                case SourceTree.TreeNodeType.SEQUENCE:
+                                    text += "序列";
+                                    break;
+                                case SourceTree.TreeNodeType.FUNCTION:
+                                    text += "函数";
+                                    break;
+                                case SourceTree.TreeNodeType.PROCEDURE:
+                                    text += "过程";
+                                    break;
+                                case SourceTree.TreeNodeType.JAVASOURCE:
+                                    text += "JAVA资源";
+                                    break;
+                                default:
+                                    break;
+                            }
+                            if (e.SourceObject is IGetAttribute)
+                            {
+                                text += ":" + ((IGetAttribute)e.SourceObject).Name;
+                            }
+                            FrmNormalView normalView = new FrmNormalView(_dbClass, e.SourceObject, text);
+                            FrmMain.Main.ShowOrActiveForm(normalView);
                         }
                     }
                     break;

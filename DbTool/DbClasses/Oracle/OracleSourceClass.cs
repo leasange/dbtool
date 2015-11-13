@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DbTool.DbClasses
 {
-    public class OracleSourceClass:ISourceClass,IFunctionClass,IProcedureClass,IJavaSourceClass,ITriggerClass
+    public class OracleSourceClass:ISourceClass,IProcedureClass,IJavaSourceClass,IFunctionClass
     {
         public string name;
         public string type;
@@ -90,6 +90,30 @@ namespace DbTool.DbClasses
         public List<CreateSqlObject> GetCreateSqlServerSql(string tableSpace = null)
         {
             throw new NotImplementedException();
+        }
+
+        public  List<NameAliasValue> GetAttributes()
+        {
+            List<NameAliasValue> navs = new List<NameAliasValue>();
+            navs.Add(new NameAliasValue()
+            {
+                Name = "name",
+                AliasName = "资源名称",
+                Value = name
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "table_name",
+                AliasName = "表名称",
+                Value = table_name
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "type",
+                AliasName = "类型",
+                Value = type
+            });
+            return navs;
         }
     }
 }

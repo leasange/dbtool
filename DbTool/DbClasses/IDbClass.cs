@@ -35,5 +35,7 @@ namespace DbTool.DbClasses
         List<IFunctionClass> GetFunctions();
         List<IProcedureClass> GetProcedures();
         List<IJavaSourceClass> GetJavaSources();
+        List<IViewClass> GetViews();
+        List<IJobClass> GetJobs();
     }
 }

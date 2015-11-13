@@ -8,7 +8,7 @@ namespace DbTool.DbClasses
     /// <summary>
     /// procedure, function, java source
     /// </summary>
-    public interface ISourceClass : ICreateSql
+    public interface ISourceClass : ICreateSql, IGetAttribute
     {
         string Name { get; }
     }

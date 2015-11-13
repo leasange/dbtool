@@ -16,7 +16,8 @@ namespace DbTool.DbClasses
         DataSet ExecuteDataSet(string sql);
         DataSet ExecuteDataSet(string sql, params object[] prms);
         DataTable ExecuteDataTable(string sql);
+        DataTable ExecuteDataTable(string sql,int start,int length);//分页
         DataTable ExecuteDataTable(string sql,params object[] prms);
-
+        DataTable ExecuteDataTable(string sql, int start, int length, params object[] prms);//分页
     }
 }

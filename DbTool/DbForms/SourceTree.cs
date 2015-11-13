@@ -243,9 +243,9 @@ namespace DbTool.DbForms
 
         private void tvSourceTree_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (e.Node.Level==1)
+            if (e.Node.Level == 1)
             {
-                EventSourceTreeArgs args = new EventSourceTreeArgs(EventSourceType.Open, e.Node.Tag);
+                EventSourceTreeArgs args = new EventSourceTreeArgs(EventSourceType.Open, (DbTool.DbForms.SourceTree.TreeNodeType)e.Node.Parent.Tag, e.Node.Tag);
                 OnSourceEvent(args);
             }
         }
@@ -260,6 +260,11 @@ namespace DbTool.DbForms
     }
     public class EventSourceTreeArgs : EventArgs
     {
+        private DbTool.DbForms.SourceTree.TreeNodeType _treeNodeType;
+        public DbTool.DbForms.SourceTree.TreeNodeType TreeNodeType
+        {
+            get { return _treeNodeType; }
+        }
         private EventSourceType _eventSourceType= EventSourceType.Open;
         public DbTool.DbForms.EventSourceType EventSourceType
         {
@@ -270,10 +275,11 @@ namespace DbTool.DbForms
         {
             get { return _sourceObject; }
         }
-        public EventSourceTreeArgs(EventSourceType type = EventSourceType.Open,object obj=null)
+        public EventSourceTreeArgs(EventSourceType type = EventSourceType.Open, DbTool.DbForms.SourceTree.TreeNodeType treeNodeType= SourceTree.TreeNodeType.TABLE,object obj = null)
         {
             _eventSourceType = type;
             _sourceObject = obj;
+            _treeNodeType = treeNodeType;
         }
     }
 }

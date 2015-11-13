@@ -65,20 +65,24 @@
     <Compile Include="DbClasses\IFunctionClass.cs" />
     <Compile Include="DbClasses\IIndexClass.cs" />
     <Compile Include="DbClasses\IJavaSourceClass.cs" />
+    <Compile Include="DbClasses\IJobClass.cs" />
     <Compile Include="DbClasses\IProcedureClass.cs" />
     <Compile Include="DbClasses\ISequenceClass.cs" />
     <Compile Include="DbClasses\ISourceClass.cs" />
     <Compile Include="DbClasses\ITableClass.cs" />
     <Compile Include="DbClasses\ITriggerClass.cs" />
+    <Compile Include="DbClasses\IViewClass.cs" />
     <Compile Include="DbClasses\MyDbHelper.cs" />
     <Compile Include="DbClasses\Oracle\OracleConstraintClass.cs" />
     <Compile Include="DbClasses\Oracle\OracleDbClass.cs" />
     <Compile Include="DbClasses\Oracle\OracleIndexClass.cs" />
+    <Compile Include="DbClasses\Oracle\OracleJobClass.cs" />
     <Compile Include="DbClasses\Oracle\OracleODACHelper.cs" />
     <Compile Include="DbClasses\Oracle\OracleSequenceClass.cs" />
     <Compile Include="DbClasses\Oracle\OracleSourceClass.cs" />
     <Compile Include="DbClasses\Oracle\OracleTableClass.cs" />
     <Compile Include="DbClasses\Oracle\OracleTriggerClass.cs" />
+    <Compile Include="DbClasses\Oracle\OracleViewClass.cs" />
     <Compile Include="DbForms\DataView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -86,6 +90,12 @@
       <DependentUpon>DataView.cs</DependentUpon>
     </Compile>
     <Compile Include="DbForms\DbConnect.cs" />
+    <Compile Include="DbForms\FrmNormalView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DbForms\FrmNormalView.Designer.cs">
+      <DependentUpon>FrmNormalView.cs</DependentUpon>
+    </Compile>
     <Compile Include="DbForms\FrmOpenDb.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -193,6 +203,9 @@
     </Compile>
     <EmbeddedResource Include="DbForms\DataView.resx">
       <DependentUpon>DataView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DbForms\FrmNormalView.resx">
+      <DependentUpon>FrmNormalView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DbForms\FrmOpenDb.resx">
       <DependentUpon>FrmOpenDb.cs</DependentUpon>

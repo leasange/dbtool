@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using DbTool.DbClasses;
+using System.Threading;
 
 namespace DbTool.DbForms
 {
     public partial class DataView : UserControl
     {
         private IDbClass _dbClass;
-        //分页
-        private string _sqlFormat = "select * from (select t.*, rownum {0} from ({1}) t where rownum <= {2}) where {0} > {3}";
+
         private string _sql = "";
 
         public DbTool.DbClasses.IDbClass DbClass
@@ -29,7 +29,28 @@ namespace DbTool.DbForms
 
         public void SetSql(string sql)
         {
+            _sql = sql;
+            ClearData();
+        }
 
+        private DataTable QueryMore(ref bool isLast)
+        {
+            int start = this.dgvData.Rows.Count;
+            int length = this.Height / (this.dgvData.RowTemplate.Height + this.dgvData.ColumnHeadersHeight);
+            if (length<50)
+            {
+                length = 50;
+            }
+            DataTable dt = _dbClass.GetDbHelper().ExecuteDataTable(_sql, start, length);
+            if (dt.Rows.Count<length)
+            {
+                isLast = true;
+            }
+            else
+            {
+                isLast = false;
+            }
+            return dt;
         }
 
         public void ClearData()
@@ -40,50 +61,62 @@ namespace DbTool.DbForms
 
         public void AddDataTable(DataTable dt)
         {
-            this.dgvData.SuspendLayout();
-            try
-            {
-                if (this.dgvData.Columns.Count == 0)
+            Exception exc = null;
+            this.Invoke(new Action(() =>
                 {
-                    foreach (DataColumn item in dt.Columns)
+                    this.dgvData.SuspendLayout();
+                    try
                     {
-                        DataGridViewColumn dgvc = new DataGridViewColumn();
-                        dgvc.ValueType = item.DataType;
-                        dgvc.Name = item.ColumnName;
-                        dgvc.HeaderText = item.ColumnName;
-                        this.dgvData.Columns.Add(dgvc);
+                        if (this.dgvData.Columns.Count == 0)
+                        {
+                            foreach (DataColumn item in dt.Columns)
+                            {
+                                DataGridViewColumn dgvc = new DataGridViewColumn();
+                                dgvc.ValueType = item.DataType;
+                                dgvc.CellTemplate = new System.Windows.Forms.DataGridViewTextBoxCell();
+                                dgvc.Resizable =  DataGridViewTriState.True;
+                                dgvc.SortMode = DataGridViewColumnSortMode.Automatic;
+                                dgvc.Name = item.ColumnName;
+                                dgvc.HeaderText = item.ColumnName;
+                                this.dgvData.Columns.Add(dgvc);
+                            }
+                        }
+                        foreach (DataRow item in dt.Rows)
+                        {
+                            DataGridViewRow dgvr = new DataGridViewRow();
+                            dgvr.CreateCells(dgvData, item.ItemArray);
+                            this.dgvData.Rows.Add(dgvr);
+                        }
+                        //this.dgvData.FirstDisplayedScrollingRowIndex = this.dgvData.Rows.Count - dt.Rows.Count;
                     }
-                }
-                foreach (DataRow item in dt.Rows)
-                {
-                    DataGridViewRow dgvr = new DataGridViewRow();
-                    dgvr.CreateCells(dgvData, item.ItemArray);
-                    this.dgvData.Rows.Add(dgvr);
-                }
-            }
-            catch (Exception)
+                    catch (Exception ex)
+                    {
+                        exc = ex;
+                    }
+                    finally
+                    {
+                        this.dgvData.ResumeLayout();
+                    }
+                }));
+            if (exc!=null)
             {
-                throw;
+                throw exc;
             }
-            finally
+        }
+
+        public void ExcuteMore(ref bool isLast)
+        {
+            DataTable dt = QueryMore(ref isLast);
+            AddDataTable(dt);
+        }
+
+        public void ExcuteAll()
+        {
+            bool ret = false;
+            while (!ret)
             {
-                this.dgvData.ResumeLayout();
+                ExcuteMore(ref ret);
             }
-        }
-
-        private void btnMore_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnAll_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnStop_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -117,7 +117,6 @@ namespace DbTool.DbForms
             tbSql.Text = sb.ToString().TrimEnd('\r', '\n');
         }
 
-
         private bool _bloadedData = false;
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {

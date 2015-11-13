@@ -70,5 +70,59 @@ namespace DbTool.DbClasses
         {
             throw new NotImplementedException();
         }
+
+        public List<NameAliasValue> GetAttributes()
+        {
+            List<NameAliasValue> navs = new List<NameAliasValue>();
+            navs.Add(new NameAliasValue()
+            {
+                Name = "trigger_name",
+                AliasName = "触发器名称",
+                Value = trigger_name
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "triggering_event",
+                AliasName = "事件",
+                Value = triggering_event
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "trigger_type",
+                AliasName = "类型",
+                Value = trigger_type
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "table_name",
+                AliasName = "表名称",
+                Value = table_name
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "column_name",
+                AliasName = "列名称",
+                Value = column_name
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "status",
+                AliasName = "启动状态",
+                Value = status
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "column_name",
+                AliasName = "列名称",
+                Value = column_name
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "referencing_names",
+                AliasName = "引用名称",
+                Value = referencing_names
+            });
+            return navs;
+        }
     }
 }

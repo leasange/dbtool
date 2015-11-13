@@ -86,5 +86,64 @@ namespace DbTool.DbClasses
         {
             get { return Convert.ToString(sequence_name); }
         }
+
+        public string Name
+        {
+            get { return Convert.ToString(sequence_name); }
+        }
+
+        public List<NameAliasValue> GetAttributes()
+        {
+            List<NameAliasValue> navs = new List<NameAliasValue>();
+            navs.Add(new NameAliasValue()
+            {
+                Name = "sequence_name",
+                AliasName = "名称",
+                Value = sequence_name
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "increment_by",
+                AliasName = "增量",
+                Value = increment_by
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "min_value",
+                AliasName = "最小值",
+                Value = min_value
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "max_value",
+                AliasName = "最大值",
+                Value = max_value
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "last_number",
+                AliasName = "开始值",
+                Value = last_number
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "cache_size",
+                AliasName = "缓存大小",
+                Value = cache_size
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "cycle_flag",
+                AliasName = "循环",
+                Value = cycle_flag
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "order_flag",
+                AliasName = "排序",
+                Value = order_flag
+            });
+            return navs;
+        }
     }
 }

@@ -377,6 +377,11 @@ namespace DbTool.DbClasses
 
         #region IGetAttribute 成员
 
+
+        public string Name
+        {
+            get { return Convert.ToString(table_name); }
+        }
         public List<NameAliasValue> GetAttributes()
         {
             List<NameAliasValue> navs = new List<NameAliasValue>();

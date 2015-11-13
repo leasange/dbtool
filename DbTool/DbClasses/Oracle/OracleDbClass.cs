@@ -141,7 +141,7 @@ namespace DbTool.DbClasses
         {//select * from(select t.*,ROWNUM r from pt_oper_log t )where r>50 and r<=100
 
             string row="row"+Guid.NewGuid().ToString("N").Substring(24);
-
+            //private string _sqlFormat = "select * from (select t.*, rownum {0} from ({1}) t where rownum <= {2}) where {0} > {3}";
             string sql = "select * from(select t.*,ROWNUM " + row + " from " + tableName + " t) where " + row + ">" + start;
             if (length>0)
             {
@@ -369,6 +369,15 @@ namespace DbTool.DbClasses
             }
             return "";
         }
+        public List<IViewClass> GetViews()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<IJobClass> GetJobs()
+        {
+            throw new NotImplementedException();
+        }
 
         public IDbHelper GetDbHelper()
         {
@@ -379,7 +388,5 @@ namespace DbTool.DbClasses
         {
             return Newtonsoft.Json.JsonConvert.SerializeObject(this);
         }
-
-
     }
 }

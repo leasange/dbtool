@@ -8,7 +8,7 @@ namespace DbTool.DbClasses
     /// <summary>
     /// 序列
     /// </summary>
-    public interface ISequenceClass : ICreateSql
+    public interface ISequenceClass : ICreateSql,IGetAttribute
     {
         string SequenceName { get; }
     }

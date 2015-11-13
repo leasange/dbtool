@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace DbTool.MyControls
 {
@@ -28,6 +29,34 @@ namespace DbTool.MyControls
                 rectangle,
                 this.RowHeadersDefaultCellStyle.ForeColor,
                 TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
+        }
+
+        public override void Sort(IComparer comparer)
+        {
+            try
+            {
+                base.Sort(comparer);
+            }
+            catch (Exception)
+            {
+            }
+           
+        }
+        public override void Sort(DataGridViewColumn dataGridViewColumn, ListSortDirection direction)
+        {
+            try
+            {
+                foreach (DataGridViewRow item in this.Rows)
+                {
+                    if (item.Cells[dataGridViewColumn.Index].Value == DBNull.Value)
+                    {
+                        item.Cells[dataGridViewColumn.Index].Value = string.Empty;
+                    }
+                }
+                base.Sort(dataGridViewColumn, direction);
+            }
+            catch (Exception)
+            {}
         }
     }
 }
