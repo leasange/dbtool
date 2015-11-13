@@ -132,13 +132,6 @@ namespace DbTool
 
         }
 
-        private void openOracle_Click(object sender, EventArgs e)
-        {
-            FrmOracle oracle = new FrmOracle();
-            oracle.MdiParent = this;
-            oracle.Show();
-        }
-
         private void tsmiNewConnect_Click(object sender, EventArgs e)
         {
             NewConnectDb();

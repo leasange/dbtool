@@ -39,7 +39,7 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.DataAccess, Version=4.121.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64" />
+    <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -138,19 +138,13 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmOracle.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmOracle.Designer.cs">
-      <DependentUpon>FrmOracle.cs</DependentUpon>
-    </Compile>
     <Compile Include="DbForms\FrmSqlWin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DbForms\FrmSqlWin.Designer.cs">
       <DependentUpon>FrmSqlWin.cs</DependentUpon>
     </Compile>
-    <Compile Include="ITableColClass.cs" />
+    <Compile Include="DbClasses\ITableColClass.cs" />
     <Compile Include="MyControls\DataGridViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -163,44 +157,8 @@
     <Compile Include="MyControls\TreeViewEx.Designer.cs">
       <DependentUpon>TreeViewEx.cs</DependentUpon>
     </Compile>
-    <Compile Include="OracleManager.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="OracleManager.Designer.cs">
-      <DependentUpon>OracleManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="OracleView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="OracleView.Designer.cs">
-      <DependentUpon>OracleView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SequenceView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SequenceView.Designer.cs">
-      <DependentUpon>SequenceView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SourceView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SourceView.Designer.cs">
-      <DependentUpon>SourceView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TableView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="TableView.Designer.cs">
-      <DependentUpon>TableView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TriggerView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="TriggerView.Designer.cs">
-      <DependentUpon>TriggerView.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="DbForms\DataView.resx">
       <DependentUpon>DataView.cs</DependentUpon>
     </EmbeddedResource>
@@ -228,9 +186,6 @@
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmOracle.resx">
-      <DependentUpon>FrmOracle.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="DbForms\FrmSqlWin.resx">
       <DependentUpon>FrmSqlWin.cs</DependentUpon>
     </EmbeddedResource>
@@ -239,12 +194,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MyControls\TreeViewEx.resx">
       <DependentUpon>TreeViewEx.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OracleManager.resx">
-      <DependentUpon>OracleManager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OracleView.resx">
-      <DependentUpon>OracleView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -255,18 +204,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="SequenceView.resx">
-      <DependentUpon>SequenceView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SourceView.resx">
-      <DependentUpon>SourceView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TableView.resx">
-      <DependentUpon>TableView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TriggerView.resx">
-      <DependentUpon>TriggerView.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
