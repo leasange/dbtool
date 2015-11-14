@@ -40,9 +40,12 @@
       <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +54,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbClasses\DbDefinition.cs" />
@@ -164,6 +170,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DbForms\FrmNormalView.resx">
       <DependentUpon>FrmNormalView.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DbForms\FrmOpenDb.resx">
       <DependentUpon>FrmOpenDb.cs</DependentUpon>
@@ -188,6 +195,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DbForms\FrmSqlWin.resx">
       <DependentUpon>FrmSqlWin.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MyControls\DataGridViewEx.resx">
       <DependentUpon>DataGridViewEx.cs</DependentUpon>
@@ -215,9 +223,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FastColoredTextBox\FastColoredTextBox.csproj">
-      <Project>{6dd14a85-ccfc-4774-bd26-0f5772512319}</Project>
-      <Name>FastColoredTextBox</Name>
+    <ProjectReference Include="..\AvalonEdit.Winform\AvalonEdit.Winform.csproj">
+      <Project>{b2fd80c5-0b99-4e5f-bded-231fffa772ef}</Project>
+      <Name>AvalonEdit.Winform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj">
+      <Project>{6c55b776-26d4-4db3-a6ab-87e783b2f3d1}</Project>
+      <Name>ICSharpCode.AvalonEdit</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

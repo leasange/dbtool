@@ -38,14 +38,14 @@
             this.tabPageIndex = new System.Windows.Forms.TabPage();
             this.dgvIndexs = new DbTool.MyControls.DataGridViewEx();
             this.tabPageData = new System.Windows.Forms.TabPage();
-            this.btnStop = new System.Windows.Forms.Button();
-            this.btnAll = new System.Windows.Forms.Button();
-            this.btnMore = new System.Windows.Forms.Button();
-            this.tabPageSql = new System.Windows.Forms.TabPage();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.dgvData = new DbTool.MyControls.DataGridViewEx();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.lbLoading = new System.Windows.Forms.Label();
-            this.tbSql = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.btnMore = new System.Windows.Forms.Button();
+            this.btnAll = new System.Windows.Forms.Button();
+            this.tabPageSql = new System.Windows.Forms.TabPage();
+            this.tbSql = new AvalonEdit.Winform.AvalonTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNormal)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabPageNormal.SuspendLayout();
@@ -56,9 +56,9 @@
             this.tabPageIndex.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvIndexs)).BeginInit();
             this.tabPageData.SuspendLayout();
-            this.tabPageSql.SuspendLayout();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.tabPageSql.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvNormal
@@ -189,62 +189,6 @@
             this.tabPageData.Text = "数据";
             this.tabPageData.UseVisualStyleBackColor = true;
             // 
-            // btnStop
-            // 
-            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnStop.Location = new System.Drawing.Point(160, 2);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(72, 26);
-            this.btnStop.TabIndex = 4;
-            this.btnStop.Text = "终止加载";
-            this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
-            // 
-            // btnAll
-            // 
-            this.btnAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAll.Location = new System.Drawing.Point(82, 2);
-            this.btnAll.Name = "btnAll";
-            this.btnAll.Size = new System.Drawing.Size(72, 26);
-            this.btnAll.TabIndex = 3;
-            this.btnAll.Text = "所有";
-            this.btnAll.UseVisualStyleBackColor = true;
-            this.btnAll.Click += new System.EventHandler(this.btnAll_Click);
-            // 
-            // btnMore
-            // 
-            this.btnMore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnMore.Location = new System.Drawing.Point(4, 2);
-            this.btnMore.Name = "btnMore";
-            this.btnMore.Size = new System.Drawing.Size(72, 26);
-            this.btnMore.TabIndex = 3;
-            this.btnMore.Text = "更多";
-            this.btnMore.UseVisualStyleBackColor = true;
-            this.btnMore.Click += new System.EventHandler(this.btnMore_Click);
-            // 
-            // tabPageSql
-            // 
-            this.tabPageSql.Controls.Add(this.tbSql);
-            this.tabPageSql.Location = new System.Drawing.Point(4, 22);
-            this.tabPageSql.Name = "tabPageSql";
-            this.tabPageSql.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSql.Size = new System.Drawing.Size(700, 338);
-            this.tabPageSql.TabIndex = 1;
-            this.tabPageSql.Text = "SQL";
-            this.tabPageSql.UseVisualStyleBackColor = true;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.lbLoading);
-            this.panel1.Controls.Add(this.btnStop);
-            this.panel1.Controls.Add(this.btnMore);
-            this.panel1.Controls.Add(this.btnAll);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(3, 306);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(694, 29);
-            this.panel1.TabIndex = 5;
-            // 
             // dgvData
             // 
             this.dgvData.AllowUserToAddRows = false;
@@ -259,6 +203,18 @@
             this.dgvData.Size = new System.Drawing.Size(694, 303);
             this.dgvData.TabIndex = 6;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.lbLoading);
+            this.panel1.Controls.Add(this.btnStop);
+            this.panel1.Controls.Add(this.btnMore);
+            this.panel1.Controls.Add(this.btnAll);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(3, 306);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(694, 29);
+            this.panel1.TabIndex = 5;
+            // 
             // lbLoading
             // 
             this.lbLoading.AutoSize = true;
@@ -270,24 +226,62 @@
             this.lbLoading.Text = "加载中...";
             this.lbLoading.Visible = false;
             // 
+            // btnStop
+            // 
+            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnStop.Location = new System.Drawing.Point(160, 2);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(72, 26);
+            this.btnStop.TabIndex = 4;
+            this.btnStop.Text = "终止加载";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
+            // btnMore
+            // 
+            this.btnMore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnMore.Location = new System.Drawing.Point(4, 2);
+            this.btnMore.Name = "btnMore";
+            this.btnMore.Size = new System.Drawing.Size(72, 26);
+            this.btnMore.TabIndex = 3;
+            this.btnMore.Text = "更多";
+            this.btnMore.UseVisualStyleBackColor = true;
+            this.btnMore.Click += new System.EventHandler(this.btnMore_Click);
+            // 
+            // btnAll
+            // 
+            this.btnAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAll.Location = new System.Drawing.Point(82, 2);
+            this.btnAll.Name = "btnAll";
+            this.btnAll.Size = new System.Drawing.Size(72, 26);
+            this.btnAll.TabIndex = 3;
+            this.btnAll.Text = "所有";
+            this.btnAll.UseVisualStyleBackColor = true;
+            this.btnAll.Click += new System.EventHandler(this.btnAll_Click);
+            // 
+            // tabPageSql
+            // 
+            this.tabPageSql.Controls.Add(this.tbSql);
+            this.tabPageSql.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSql.Name = "tabPageSql";
+            this.tabPageSql.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSql.Size = new System.Drawing.Size(700, 338);
+            this.tabPageSql.TabIndex = 1;
+            this.tabPageSql.Text = "SQL";
+            this.tabPageSql.UseVisualStyleBackColor = true;
+            // 
             // tbSql
             // 
             this.tbSql.AllowDrop = true;
+            this.tbSql.AutoScroll = true;
             this.tbSql.AutoScrollMinSize = new System.Drawing.Size(27, 14);
-            this.tbSql.BackBrush = null;
-            this.tbSql.CommentPrefix = "--";
-            this.tbSql.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbSql.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbSql.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSql.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.tbSql.Language = FastColoredTextBoxNS.Language.SQL;
-            this.tbSql.LeftBracket = '(';
+            this.tbSql.Font = new System.Drawing.Font("Consolas", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbSql.Location = new System.Drawing.Point(3, 3);
+            this.tbSql.Margin = new System.Windows.Forms.Padding(4);
             this.tbSql.Name = "tbSql";
-            this.tbSql.Paddings = new System.Windows.Forms.Padding(0);
-            this.tbSql.RightBracket = ')';
-            this.tbSql.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.tbSql.Size = new System.Drawing.Size(694, 332);
+            this.tbSql.SyntaxHighlighting = "SQL";
             this.tbSql.TabIndex = 0;
             // 
             // FrmTableView
@@ -309,10 +303,10 @@
             this.tabPageIndex.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvIndexs)).EndInit();
             this.tabPageData.ResumeLayout(false);
-            this.tabPageSql.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
+            this.tabPageSql.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -336,6 +330,6 @@
         private System.Windows.Forms.Panel panel1;
         private DbTool.MyControls.DataGridViewEx dgvData;
         private System.Windows.Forms.Label lbLoading;
-        private FastColoredTextBoxNS.FastColoredTextBox tbSql;
+        private AvalonEdit.Winform.AvalonTextBox tbSql;
     }
 }

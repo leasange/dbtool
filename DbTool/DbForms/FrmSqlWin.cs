@@ -24,9 +24,9 @@ namespace DbTool
         private void tsbQuery_Click(object sender, EventArgs e)
         {
             string text = this.tbSql.Text;
-            if (tbSql.SelectionLength >0)
+            if (tbSql.TextEditor.SelectionLength >0)
             {
-                text=tbSql.SelectedText;
+                text = tbSql.TextEditor.SelectedText;
             }
             text = text.Trim();
             text = text.TrimEnd(';',' ');

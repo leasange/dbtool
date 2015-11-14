@@ -33,7 +33,7 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageNormal = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tbSql = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.tbSql = new AvalonEdit.Winform.AvalonTextBox();
             this.dgvNormal = new DbTool.MyControls.DataGridViewEx();
             this.tabControl.SuspendLayout();
             this.tabPageNormal.SuspendLayout();
@@ -77,35 +77,12 @@
             // 
             // tbSql
             // 
-            this.tbSql.AutoCompleteBracketsList = new char[] {
-        '(',
-        ')',
-        '{',
-        '}',
-        '[',
-        ']',
-        '\"',
-        '\"',
-        '\'',
-        '\''};
             this.tbSql.AutoScrollMinSize = new System.Drawing.Size(27, 14);
-            this.tbSql.BackBrush = null;
-            this.tbSql.CharHeight = 14;
-            this.tbSql.CharWidth = 8;
-            this.tbSql.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbSql.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.tbSql.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSql.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.tbSql.IsReplaceMode = false;
-            this.tbSql.Language = FastColoredTextBoxNS.Language.SQL;
             this.tbSql.Location = new System.Drawing.Point(3, 3);
             this.tbSql.Name = "tbSql";
-            this.tbSql.Paddings = new System.Windows.Forms.Padding(0);
-            this.tbSql.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-            this.tbSql.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("tbSql.ServiceColors")));
             this.tbSql.Size = new System.Drawing.Size(577, 356);
             this.tbSql.TabIndex = 0;
-            this.tbSql.Zoom = 100;
             // 
             // dgvNormal
             // 
@@ -145,6 +122,6 @@
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPageNormal;
         private System.Windows.Forms.TabPage tabPage2;
-        private FastColoredTextBoxNS.FastColoredTextBox tbSql;
+        private AvalonEdit.Winform.AvalonTextBox tbSql;
     }
 }
