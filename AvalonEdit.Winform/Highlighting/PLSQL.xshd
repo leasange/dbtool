@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <!-- Source: http://community.sharpdevelop.net/forums/t/12893.aspx -->
 <SyntaxDefinition name ="PLSQL" extensions = ".plsql" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
-  <Color name="Comment"       foreground="Green"  exampleText="-- comment" />
+  <Color name="Comment"       foreground="Green" fontStyle="italic"  exampleText="-- comment" />
   <Color name="String"        foreground="Red"    exampleText="&quot;Hello, World!&quot;" />
   <Color name="Keywords"      foreground="Blue"   fontWeight="bold" />
   <Color name="ReservedWords" foreground="Blue"   fontWeight="bold" />

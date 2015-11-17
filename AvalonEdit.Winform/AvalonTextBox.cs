@@ -82,7 +82,7 @@ namespace AvalonEdit.Winform
         private void LoadHighlightingXshd()
         {
             string[] paths = new string[]{
-                "AvalonEdit.Winform.Highlighting.PLSQL.xshd,PLSQL,.sql",
+                "AvalonEdit.Winform.Highlighting.PLSQL.xshd,PLSQL,.plsql",
                 "AvalonEdit.Winform.Highlighting.SQL.xshd,SQL,.sql"
             };
             foreach (string item in paths)
