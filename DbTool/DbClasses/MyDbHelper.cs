@@ -202,7 +202,6 @@ namespace DbTool.DbClasses
             return indbType;
         }
     }
-
     public class SqlServerDbSelector : IDbSelector
     {
         public IDbClass GetDbClass(string connectstring)
