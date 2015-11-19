@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmNormalView));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageNormal = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -38,7 +36,6 @@
             this.tabControl.SuspendLayout();
             this.tabPageNormal.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbSql)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNormal)).BeginInit();
             this.SuspendLayout();
             // 
@@ -77,11 +74,15 @@
             // 
             // tbSql
             // 
+            this.tbSql.AutoScroll = true;
             this.tbSql.AutoScrollMinSize = new System.Drawing.Size(27, 14);
             this.tbSql.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSql.Font = new System.Drawing.Font("Consolas", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbSql.Location = new System.Drawing.Point(3, 3);
+            this.tbSql.Margin = new System.Windows.Forms.Padding(4);
             this.tbSql.Name = "tbSql";
             this.tbSql.Size = new System.Drawing.Size(577, 356);
+            this.tbSql.SyntaxHighlighting = "SQL";
             this.tbSql.TabIndex = 0;
             // 
             // dgvNormal
@@ -110,7 +111,6 @@
             this.tabControl.ResumeLayout(false);
             this.tabPageNormal.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.tbSql)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNormal)).EndInit();
             this.ResumeLayout(false);
 

@@ -33,22 +33,15 @@ namespace DbTool.DbClasses.Oracle
         
         public bool Open()
         {
-         //   try
-           // {
-                if (_connection == null)
-                {
-                    _connection = new OracleConnection(_connectString);
-                }
-                if (_connection.State != ConnectionState.Open)
-                {
-                    _connection.Open();
-                }
-                return _connection.State == ConnectionState.Open;
-//             }
-//             catch (Exception ex)
-//             {
-//                 throw;
-//             }
+            if (_connection == null)
+            {
+                _connection = new OracleConnection(_connectString);
+            }
+            if (_connection.State != ConnectionState.Open)
+            {
+                _connection.Open();
+            }
+            return _connection.State == ConnectionState.Open;
         }
         public void Close()
         {

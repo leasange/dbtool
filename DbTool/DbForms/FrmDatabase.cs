@@ -35,7 +35,7 @@ namespace DbTool
                 }
                 catch (System.Exception ex)
                 {
-                    MessageBox.Show("打开数据库异常：" + ex.Message);
+                    MessageBox.Show("打开数据库异常：" + ex.Message+"\r\n"+ex.StackTrace);
                 }
             }
         }
