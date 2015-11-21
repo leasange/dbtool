@@ -17,7 +17,7 @@ namespace DbTool
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-#if DEBUG
+#if !DEBUG
             Application.ThreadException += Application_ThreadException;
 #endif
             Application.Run(new FrmMain());
