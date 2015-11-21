@@ -29,16 +29,17 @@ namespace DbTool
             if (ex != null)
             {
                 System.Text.StringBuilder sb = new System.Text.StringBuilder();
-                sb.AppendLine("异常消息："+ex.Message);
-                sb.AppendLine("调用堆栈：" + ex.StackTrace);
+                sb.AppendLine("异常消息：\r\n"+ex.Message);
+                sb.AppendLine("调用堆栈：\r\n" + ex.StackTrace);
 
                 if (ex.InnerException != null)
                 {
-                    sb.AppendLine("内部异常消息：" + ex.InnerException.Message);
-                    sb.AppendLine("内部异常堆栈：" + ex.InnerException.StackTrace);
+                    sb.AppendLine("内部异常消息：\r\n" + ex.InnerException.Message);
+                    sb.AppendLine("内部异常堆栈：\r\n" + ex.InnerException.StackTrace);
                 }
-
-                MessageBox.Show(sb.ToString());
+                DbTool.DbForms.FrmError error = new DbTool.DbForms.FrmError(sb.ToString());
+                error.ShowDialog();
+                //MessageBox.Show(sb.ToString());
             }
             else
             {
