@@ -28,15 +28,8 @@ namespace DbTool
                 }
                 _dbConnectConfigure = value;
                 SetTitle();
-                try
-                {
-                    _dbClass = _dbConnectConfigure.GetDbClass();
-                    ReInit();
-                }
-                catch (System.Exception ex)
-                {
-                    MessageBox.Show("打开数据库异常：" + ex.Message+"\r\n"+ex.StackTrace);
-                }
+                _dbClass = _dbConnectConfigure.GetDbClass();
+                ReInit();
             }
         }
         public event EventHandler NewConnect = null;

@@ -17,7 +17,9 @@ namespace DbTool
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+#if DEBUG
             Application.ThreadException += Application_ThreadException;
+#endif
             Application.Run(new FrmMain());
         }
 
@@ -26,7 +28,17 @@ namespace DbTool
             Exception ex = e.Exception as Exception;
             if (ex != null)
             {
-                MessageBox.Show(ex.Message + "\r\n" + ex.StackTrace);
+                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                sb.AppendLine("异常消息："+ex.Message);
+                sb.AppendLine("调用堆栈：" + ex.StackTrace);
+
+                if (ex.InnerException != null)
+                {
+                    sb.AppendLine("内部异常消息：" + ex.InnerException.Message);
+                    sb.AppendLine("内部异常堆栈：" + ex.InnerException.StackTrace);
+                }
+
+                MessageBox.Show(sb.ToString());
             }
             else
             {
