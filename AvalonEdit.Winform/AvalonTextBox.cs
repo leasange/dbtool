@@ -31,6 +31,12 @@ namespace AvalonEdit.Winform
             }
         }
 
+        public bool IsReadOnly
+        {
+            get { return _editor.IsReadOnly; }
+            set { _editor.IsReadOnly = value; }
+        }
+
         public string SyntaxHighlighting
         {
             get
