@@ -71,6 +71,28 @@ namespace DbTool.DbClasses
                 return _sources;
             }
         }
+        private bool _isLoadViews = false;
+        private List<OracleViewClass> _views = new List<OracleViewClass>();
+        public List<OracleViewClass> Views
+        {
+            get 
+            {
+                GetViews();
+                return _views;
+            }
+        }
+        private bool _isLoadJobs = false;
+        private List<OracleJobClass> _jobs = new List<OracleJobClass>();
+        public List<OracleJobClass> Jobs
+        {
+            get
+            {
+                GetJobs();
+                return _jobs;
+            }
+        }
+
+
         private OracleODACHelper _oracleHelper = null;
         private string _userName;
         public OracleDbClass(string connect)
@@ -371,12 +393,49 @@ namespace DbTool.DbClasses
         }
         public List<IViewClass> GetViews()
         {
-            throw new NotImplementedException();
+            if (_views.Count == 0 && !_isLoadViews)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("create or replace function user_viwes_long_2_varchar(p_view_name in user_views.view_name%type) ");
+                sb.Append("return varchar2 as ");
+                sb.Append("l_text LONG; ");
+                sb.Append("begin ");
+                sb.Append("select text ");
+                sb.Append("into l_text ");
+                sb.Append("from user_views ");
+                sb.Append("where view_name = p_view_name; ");
+                sb.Append("return substr(l_text, 1, 40000); ");
+                sb.Append("end; ");
+                _oracleHelper.ExecuteSql(sb.ToString());
+                DataTable dt = _oracleHelper.ExecuteDataTable("select view_name,text_length,user_viwes_long_2_varchar(view_name) as text,type_text_length,type_text,oid_text_length,oid_text,view_type_owner,view_type,superview_name from user_views");
+                _oracleHelper.ExecuteSql("drop function user_viwes_long_2_varchar");
+                foreach (DataRow item in dt.Rows)
+                {
+                    OracleViewClass ovc = new OracleViewClass(item);
+                    _views.Add(ovc);
+                }
+                _isLoadViews = true;
+            }
+            List<IViewClass> t = new List<IViewClass>();
+            t.AddRange(_views);
+            return t;
         }
 
         public List<IJobClass> GetJobs()
         {
-            throw new NotImplementedException();
+            if (_jobs.Count == 0 && !_isLoadJobs)
+            {
+                DataTable dt = _oracleHelper.ExecuteDataTable("select * from user_jobs");
+                foreach (DataRow item in dt.Rows)
+                {
+                    OracleJobClass ojc = new OracleJobClass(item);
+                    _jobs.Add(ojc);
+                }
+                _isLoadJobs = true;
+            }
+            List<IJobClass> t = new List<IJobClass>();
+            t.AddRange(_jobs);
+            return t;
         }
 
         public IDbHelper GetDbHelper()

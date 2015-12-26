@@ -46,7 +46,7 @@ namespace DbTool.DbClasses
         public List<CreateSqlObject> GetCreateOracleSql(string tableSpace = null)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("-- Create sequence");
+            //sb.AppendLine("-- Create sequence");
             sb.AppendLine("create sequence " + sequence_name);
             sb.AppendLine("minvalue " + min_value);
             sb.AppendLine("maxvalue " + max_value);
