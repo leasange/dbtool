@@ -50,7 +50,7 @@ namespace DbTool.DbClasses.Oracle
 
         public List<CreateSqlObject> GetCreateOracleSql(string tableSpace = null)
         {
-            
+            return null;
         }
 
         public List<CreateSqlObject> GetCreateMySqlSql(string tableSpace = null)
