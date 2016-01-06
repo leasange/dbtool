@@ -67,6 +67,7 @@
       <Word>ACCEPT</Word>
       <Word>BINARY_INTEGER</Word>
       <Word>CREATE</Word>
+      <Word>REPLACE</Word>
       <Word>DISPOSE</Word>
       <Word>ACCESS</Word>
       <Word>BODY</Word>
