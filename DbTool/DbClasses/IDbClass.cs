@@ -24,7 +24,7 @@ namespace DbTool.DbClasses
         IDbHelper GetDbHelper();
         List<ITableClass> GetTables();
         ITableClass GetTable(string tableName);
-        ulong GetTableDataCount(string tableName);
+        decimal GetTableDataCount(string tableName);
         List<DbData> GetTableData(string tableName, int start=0, int length=-1);//from 0 to .. if length=-1 unlimited
         List<IConstraintClass> GetConstraints();
         List<IConstraintClass> GetConstraints(string tableName);

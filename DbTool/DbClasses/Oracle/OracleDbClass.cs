@@ -153,11 +153,11 @@ namespace DbTool.DbClasses
             return tables.Find(m => m.TableName == tableName);
         }
 
-        public ulong GetTableDataCount(string tableName)
+        public decimal GetTableDataCount(string tableName)
         {
             string sql = "select count(1) from " + tableName;
             DataTable dt = _oracleHelper.ExecuteDataTable(sql);
-            return ulong.Parse(Convert.ToString(dt.Rows[0][0]));
+            return decimal.Parse(Convert.ToString(dt.Rows[0][0]));
         }
         public List<DbData> GetTableData(string tableName, int start = 0, int length = -1)
         {//select * from(select t.*,ROWNUM r from pt_oper_log t )where r>50 and r<=100

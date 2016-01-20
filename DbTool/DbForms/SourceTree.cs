@@ -23,7 +23,9 @@ namespace DbTool.DbForms
             SEQUENCE,
             FUNCTION,
             PROCEDURE,
-            JAVASOURCE
+            JAVASOURCE,
+            JOB,
+            VIEW
         }
 
         private Dictionary<TreeNodeType, string> _dics = new Dictionary<TreeNodeType, string>();
@@ -38,6 +40,8 @@ namespace DbTool.DbForms
             _dics.Add(TreeNodeType.FUNCTION, "函数");
             _dics.Add(TreeNodeType.PROCEDURE, "存储过程");
             _dics.Add(TreeNodeType.JAVASOURCE, "Java资源");
+            _dics.Add(TreeNodeType.JOB, "事务");
+            _dics.Add(TreeNodeType.VIEW, "视图");
             foreach (var item in _dics)
             {
                 TreeNode node = new TreeNode(item.Value);
@@ -199,7 +203,34 @@ namespace DbTool.DbForms
                }
            }));
         }
-
+        //加载事务
+        private void LoadJobs()
+        {
+            List<IJobClass> jobs = _dbClass.GetJobs();
+            this.Invoke(new Action(() =>
+            {
+                foreach (IJobClass item in jobs)
+                {
+                    TreeNode node = new TreeNode(Convert.ToString(item.Name));
+                    node.Tag = item;
+                    tvSourceTree.SelectedNode.Nodes.Add(node);
+                }
+            }));
+        }
+        //加载视图
+        private void LoadViews()
+        {
+            List<IViewClass> views = _dbClass.GetViews();
+            this.Invoke(new Action(() =>
+            {
+                foreach (IViewClass item in views)
+                {
+                    TreeNode node = new TreeNode(Convert.ToString(item.Name));
+                    node.Tag = item;
+                    tvSourceTree.SelectedNode.Nodes.Add(node);
+                }
+            }));
+        }
         protected void OnSourceEvent(EventSourceTreeArgs args)
         {
             if (EventSource!=null)
@@ -233,6 +264,12 @@ namespace DbTool.DbForms
                         break;
                     case TreeNodeType.JAVASOURCE:
                         _action = LoadUserJavaSources;
+                        break;
+                    case TreeNodeType.JOB:
+                        _action = LoadJobs;
+                        break;
+                    case TreeNodeType.VIEW:
+                        _action = LoadViews;
                         break;
                     default:
                         break;

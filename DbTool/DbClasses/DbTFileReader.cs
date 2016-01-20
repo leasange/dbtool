@@ -20,6 +20,7 @@ namespace DbTool.DbClasses
         private Type[] curTableColumnType = null;
         private object[] curTableDbColumnType = null;
         private string[] curTableColumnNames = null;
+        private decimal curTableDataCount = 0;
         private bool _datasEnd = false;
 
         public delegate bool ReadToDbExceptionHandle(Exception ex);
@@ -223,42 +224,42 @@ namespace DbTool.DbClasses
                 if (CheckTagStart(DbtFileTags.Tables, str))
                 {
                     DoReadNodes<ITableClass>(DbtFileTags.Tables, DbtFileTags.Table, _dbDefine.Tables);
-                    //DoReadTables();
                 }
                 else if (CheckTagStart(DbtFileTags.Constraints, str))
                 {
                     DoReadNodes<IConstraintClass>(DbtFileTags.Constraints, DbtFileTags.Constraint, _dbDefine.Constraints);
-                    //DoReadConstraints();
                 }
                 else if (CheckTagStart(DbtFileTags.Sequences, str))
                 {
                     DoReadNodes<ISequenceClass>(DbtFileTags.Sequences, DbtFileTags.Sequence, _dbDefine.Sequences);
-                    //DoReadSequences();
                 }
                 else if (CheckTagStart(DbtFileTags.Triggers, str))
                 {
                     DoReadNodes<ITriggerClass>(DbtFileTags.Triggers, DbtFileTags.Trigger, _dbDefine.Triggers);
-                    //DoReadTriggers();
                 }
                 else if (CheckTagStart(DbtFileTags.Indexes, str))
                 {
                     DoReadNodes<IIndexClass>(DbtFileTags.Indexes, DbtFileTags.Index, _dbDefine.Indexes);
-                    //DoReadIndexes();
                 }
                 else if (CheckTagStart(DbtFileTags.Functions, str))
                 {
                     DoReadNodes<IFunctionClass>(DbtFileTags.Functions, DbtFileTags.Function, _dbDefine.Functions);
-                    // DoReadFunctions();
                 }
                 else if (CheckTagStart(DbtFileTags.Procedures, str))
                 {
                     DoReadNodes<IProcedureClass>(DbtFileTags.Procedures, DbtFileTags.Procedure, _dbDefine.Procedures);
-                    //DoReadProcedures();
                 }
                 else if (CheckTagStart(DbtFileTags.JavaSources, str))
                 {
                     DoReadNodes<IJavaSourceClass>(DbtFileTags.JavaSources, DbtFileTags.JavaSource, _dbDefine.JavaSources);
-                    //DoReadJavaSources();
+                }
+                else if (CheckTagStart(DbtFileTags.Views, str))
+                {
+                    DoReadNodes<IViewClass>(DbtFileTags.Views, DbtFileTags.View, _dbDefine.Views);
+                }
+                else if (CheckTagStart(DbtFileTags.Jobs, str))
+                {
+                    DoReadNodes<IJobClass>(DbtFileTags.Jobs, DbtFileTags.Job, _dbDefine.Jobs);
                 }
                 else if (CheckTagStart(DbtFileTags.Datas, str))
                 {
@@ -441,6 +442,10 @@ namespace DbTool.DbClasses
                                         {
                                             curTableColumnNames = Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(DoInReadTagContentNoStart(DbtFileTags.DataCulumnName));
                                         }
+                                        else if (CheckTagStart(DbtFileTags.DataCount, str))
+                                        {
+                                            curTableDataCount = Newtonsoft.Json.JsonConvert.DeserializeObject<decimal>(str);
+                                        }
                                         else if (CheckTagStart(DbtFileTags.DataValue, str))
                                         {
                                             _hasReadValueStart = true;
@@ -573,28 +578,37 @@ namespace DbTool.DbClasses
             bool isReadJavaSources = true,
             bool isReadDatas = true)
         {
-            SetPro(0, "开始导入数据库文件...");
+            int process_start = 0;
+            int process_end = 3;
+
+            #region 配置文件打开预加载
+            SetPro(process_start, "开始导入数据库文件...");
             if (_dbtFile == null)
             {
                 SetPro(100, "数据库配置不正确！");
                 return;
             }
-            SetPro(1, "数据库配置：" + _dbtFile.ToString());
+            process_start = 1;
+            SetPro(process_start, "数据库配置：" + _dbtFile.ToString());
             if (_dbDefine == null)
             {
-                SetPro(1, "开始读取数据库文件定义...");
+                SetPro(process_start, "开始读取数据库文件定义...");
                 ReadDbDefinition();
             }
-            SetPro(2);
+            process_start = 2;
+            SetPro(process_start);
             if (_dbDefine == null)
             {
                 SetPro(100, "数据库文件定义不正确！");
                 return;
             }
-            SetPro(3, "读取到数据库定义:" + _dbDefine.ToString());
-            SetPro(3, "开始获取当前表空间...");
+            #endregion
+            SetPro(process_end, "读取到数据库定义:" + _dbDefine.ToString());
 
+            process_start = process_end;
+            process_end = 4;
             #region 获取当前表空间
+            SetPro(process_start, "开始获取当前表空间...");
             string tableSpaceName = null;
             try
             {
@@ -607,22 +621,25 @@ namespace DbTool.DbClasses
                     return;
                 }
             }
+            SetPro(process_end, "获取到当前表空间:" + tableSpaceName);
             #endregion
+            SetPro(process_end);
 
-            SetPro(4, "获取到当前表空间:" + tableSpaceName);
+            process_start = process_end;
+            process_end = 20;
             #region 导入表
             if (isReadTables)
             {
-                SetPro(4, "待导入表的数目:" + _dbDefine.Tables.Count);
+                SetPro(process_start, "待导入表的数目:" + _dbDefine.Tables.Count);
                 if (_dbDefine.Tables.Count > 0)
                 {
-                    SetPro(4, "开始导入表定义...");
-                    float dd = 16 / (float)_dbDefine.Tables.Count;
+                    SetPro(process_start, "开始导入表定义...");
+                    float dd = (process_end - process_start) / (float)_dbDefine.Tables.Count;
                     int dtcount = 0;
                     foreach (ITableClass item in _dbDefine.Tables)
                     {
                         dtcount++;
-                        int pro = 4 + (int)(dtcount * dd);
+                        int pro = process_start + (int)(dtcount * dd);
                         SetPro(pro, "开始导入表:" + item.TableName);
                         CreateSqlDelegate action = MyDbHelper.GetCreateSqlFunction(item, dbClass.GetClassDbType());
                         List<CreateSqlObject> sqlObjs = action(tableSpaceName);
@@ -644,20 +661,88 @@ namespace DbTool.DbClasses
                 }
             }
             #endregion
-            SetPro(20);
+            SetPro(process_end);
+
+            process_start = process_end;
+            process_end = 60;
+            #region 导入数据
+            if (isReadDatas)
+            {
+                DbData data = this.GetNextDataRow();
+                int tablesCount = _dbDefine.Tables.Count == 0 ? 1 : _dbDefine.Tables.Count;
+                float dd = (process_end - process_start) / (float)tablesCount;
+                int dtcount = 0;
+                if (data != null)
+                {
+                    SetPro(20, "开始导入数据...");
+                    int count = -1;
+                    string tablename = null;
+                    while (data != null)
+                    {
+                        if (count == -1)
+                        {
+                            int add = (int)(dtcount * dd);
+                            if (add > process_end)
+                            {
+                                add = process_end;
+                            }
+                            dtcount++;
+                            tablename = data.TableDataRow.tableName;
+
+                            SetPro(process_start + add, "开始导入表：" + tablename + " 的数据...待导入数目:" + curTableDataCount);
+                            count = 0;
+                        }
+                        else if (data.TableDataRow.tableName != tablename)
+                        {
+                            int add = (int)(dtcount * dd);
+                            if (add > process_end)
+                            {
+                                add = process_end;
+                            }
+                            SetPro(process_start + add, "导入表：" + tablename + " 的数据个数为：" + count);
+                            tablename = data.TableDataRow.tableName;
+                            SetPro(process_start + add, "开始导入表：" + tablename + " 的数据...待导入数目:" + curTableDataCount);
+                            count = 0;
+                            dtcount++;
+                        }
+                        CreateDataSqlDelegate action = MyDbHelper.GetCreateSqlFunction(data, dbClass.GetClassDbType());
+                        CreateDataSqlParams sqlpram = action();
+                        try
+                        {
+                            dbClass.GetDbHelper().ExecuteSql(sqlpram.sql, sqlpram.sql_params);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (!DoProToDbException("导入数据错误", exceptionHandle, ex, "执行的SQL:" + sqlpram.sql + "\r\n数据：" + Newtonsoft.Json.JsonConvert.SerializeObject(data.TableDataRow.base64TableValues)))
+                            {
+                                return;
+                            }
+                        }
+                        count++;
+                        data = this.GetNextDataRow();
+                    }
+                    SetPro(process_end, "导入表：" + tablename + " 的数据个数为：" + count);
+                    SetPro(process_end, "导入数据结束.");
+                }
+            }
+            #endregion
+            SetPro(process_end);
+
+            process_start = process_end;
+            process_end = 70;
             #region 导入索引
             if (isReadIndexes)
             {
-                SetPro(20, "待导入索引个数：" + _dbDefine.Indexes.Count);
+                SetPro(process_start, "待导入索引个数：" + _dbDefine.Indexes.Count);
                 if (_dbDefine.Indexes.Count > 0)
                 {
-                    SetPro(20, "开始导入索引...");
-                    float dd = 5 / (float)_dbDefine.Indexes.Count;
+                    SetPro(process_start, "开始导入索引...");
+                    float dd = (process_end - process_start) / (float)_dbDefine.Indexes.Count;
                     int dtcount = 0;
                     foreach (IIndexClass item in _dbDefine.Indexes)
                     {
                         dtcount++;
-                        SetPro(20 + (int)(dtcount * dd), "开始导入表:" + item.Table_Name + " 的索引:" + item.Name);
+                        SetPro(process_start + (int)(dtcount * dd), "开始导入表:" + item.Table_Name + " 的索引:" + item.Name);
                         CreateSqlDelegate action = MyDbHelper.GetCreateSqlFunction(item, dbClass.GetClassDbType());
                         List<CreateSqlObject> sqlObjs = action(tableSpaceName);
                         foreach (CreateSqlObject sql in sqlObjs)
@@ -675,25 +760,28 @@ namespace DbTool.DbClasses
                             }
                         }
                     }
-                    SetPro(25, "导入索引结束.");
+                    SetPro(process_end, "导入索引结束.");
                 }
             }
             #endregion
-            SetPro(25);
+            SetPro(process_end);
+
+            process_start = process_end;
+            process_end = 80;
             #region 导入约束
             if (isReadConstraints)
             {
-                SetPro(25, "待导入表的约束个数：" + _dbDefine.Constraints.Count);
+                SetPro(process_start, "待导入表的约束个数：" + _dbDefine.Constraints.Count);
                 if (_dbDefine.Constraints.Count > 0)
                 {
-                    SetPro(25, "开始导入表约束...");
-                    float dd = 5 / (float)_dbDefine.Constraints.Count;
+                    SetPro(process_start, "开始导入表约束...");
+                    float dd = (process_end - process_start) / (float)_dbDefine.Constraints.Count;
                     int dtcount = 0;
                     IOrderedEnumerable<IConstraintClass> ordered = _dbDefine.Constraints.OrderBy(m => m.Level);
                     foreach (IConstraintClass item in ordered)
                     {
                         dtcount++;
-                        int pro = 25 + (int)(dtcount * dd);
+                        int pro = process_start + (int)(dtcount * dd);
                         SetPro(pro, "开始导入表:" + item.Table_Name + " 的约束:" + item.Name);
                         CreateSqlDelegate action = MyDbHelper.GetCreateSqlFunction(item, dbClass.GetClassDbType());
                         List<CreateSqlObject> sqlObjs = action(tableSpaceName);
@@ -712,85 +800,27 @@ namespace DbTool.DbClasses
                             }
                         }
                     }
-                    SetPro(30, "导入约束结束.");
+                    SetPro(process_end, "导入约束结束.");
                 }
             }
             #endregion
-            SetPro(30);
-            #region 导入数据
-            if (isReadDatas)
-            {
-                DbData data = this.GetNextDataRow();
-                float dd = 45 / (float)55;
-                int dtcount = 0;
-                if (data != null)
-                {
-                    SetPro(25, "开始导入数据...");
-                    int count = -1;
-                    string tablename = null;
-                    while (data != null)
-                    {
-                        if (count == -1)
-                        {
-                            int add = (int)(dtcount * dd);
-                            if (add > 45)
-                            {
-                                add = 45;
-                            }
-                            dtcount++;
-                            tablename = data.TableDataRow.tableName;
+            SetPro(process_end);
 
-                            SetPro(30 + add, "开始导入表：" + tablename + " 的数据...");
-                            count = 0;
-                        }
-                        else if (data.TableDataRow.tableName != tablename)
-                        {
-                            int add = (int)(dtcount * dd);
-                            if (add > 45)
-                            {
-                                add = 45;
-                            }
-                            SetPro(30 + add, "导入表：" + tablename + " 的数据个数为：" + count);
-                            tablename = data.TableDataRow.tableName;
-                            SetPro(30 + add, "开始导入表：" + tablename + " 的数据...");
-                            count = 0;
-                            dtcount++;
-                        }
-                        CreateDataSqlDelegate action = MyDbHelper.GetCreateSqlFunction(data, dbClass.GetClassDbType());
-                        CreateDataSqlParams sqlpram = action();
-                        try
-                        {
-                            dbClass.GetDbHelper().ExecuteSql(sqlpram.sql, sqlpram.sql_params);
-                        }
-                        catch (Exception ex)
-                        {
-                            if (!DoProToDbException("导入数据错误", exceptionHandle, ex, "执行的SQL:" + sqlpram.sql + "\r\n数据：" + Newtonsoft.Json.JsonConvert.SerializeObject(data.TableDataRow.base64TableValues))) 
-                            {
-                                return;
-                            }
-                        }
-                        count++;
-                        data = this.GetNextDataRow();
-                    }
-                    SetPro(75, "导入表：" + tablename + " 的数据个数为：" + count);
-                    SetPro(75, "导入数据结束.");
-                }
-            }
-            #endregion
-            SetPro(75);
+            process_start = process_end;
+            process_end = 85;
             #region 导入序列
             if (isReadSequences)
             {
-                SetPro(75, "待导入序列个数：" + _dbDefine.Sequences.Count);
+                SetPro(process_start, "待导入序列个数：" + _dbDefine.Sequences.Count);
                 if (_dbDefine.Sequences.Count > 0)
                 {
-                    SetPro(75, "开始导入序列...");
-                    float dd = 5 / (float)_dbDefine.Sequences.Count;
+                    SetPro(process_start, "开始导入序列...");
+                    float dd = (process_end - process_start) / (float)_dbDefine.Sequences.Count;
                     int dtcount = 0;
                     foreach (ISequenceClass item in _dbDefine.Sequences)
                     {
                         dtcount++;
-                        SetPro(75 + (int)(dtcount * dd), "开始导入序列:" + item.SequenceName);
+                        SetPro(process_start + (int)(dtcount * dd), "开始导入序列:" + item.SequenceName);
                         CreateSqlDelegate action = MyDbHelper.GetCreateSqlFunction(item, dbClass.GetClassDbType());
                         List<CreateSqlObject> sqlObjs = action(tableSpaceName);
                         foreach (CreateSqlObject sql in sqlObjs)
@@ -808,25 +838,28 @@ namespace DbTool.DbClasses
                             }
                         }
                     }
-                    SetPro(80, "导入序列结束.");
+                    SetPro(process_end, "导入序列结束.");
                 }
             }
             #endregion
-            SetPro(80);
+            SetPro(process_end);
+
+            process_start = process_end;
+            process_end = 90;
             #region 导入触发器
             if (isReadTriggers)
             {
-                SetPro(80, "待导入触发器个数：" + _dbDefine.Triggers.Count);
+                SetPro(process_start, "待导入触发器个数：" + _dbDefine.Triggers.Count);
 
                 if (_dbDefine.Triggers.Count > 0)
                 {
-                    float dd = 5 / (float)_dbDefine.Triggers.Count;
+                    float dd = (process_end - process_start) / (float)_dbDefine.Triggers.Count;
                     int dtcount = 0;
                     SetPro(80, "开始导入触发器...");
                     foreach (ITriggerClass item in _dbDefine.Triggers)
                     {
                         dtcount++;
-                        SetPro(80 + (int)(dtcount * dd), "开始导入表:" + item.Table_Name + " 的触发器:" + item.Name);
+                        SetPro(process_start + (int)(dtcount * dd), "开始导入表:" + item.Table_Name + " 的触发器:" + item.Name);
                         CreateSqlDelegate action = MyDbHelper.GetCreateSqlFunction(item, dbClass.GetClassDbType());
                         List<CreateSqlObject> sqlObjs = action(tableSpaceName);
                         foreach (CreateSqlObject sql in sqlObjs)
@@ -845,24 +878,27 @@ namespace DbTool.DbClasses
                         }
                     }
                 }
-                SetPro(85, "导入触发器结束.");
+                SetPro(process_end, "导入触发器结束.");
             }
             #endregion
-            SetPro(85);
+            SetPro(process_end);
+
+            process_start = process_end;
+            process_end = 95;
             #region 导入过程
             if (isReadProcedures)
             {
-                SetPro(85, "待导入存储过程个数：" + _dbDefine.Procedures.Count);
+                SetPro(process_start, "待导入存储过程个数：" + _dbDefine.Procedures.Count);
 
                 if (_dbDefine.Procedures.Count > 0)
                 {
-                    float dd = 5 / (float)_dbDefine.Procedures.Count;
+                    float dd = (process_end - process_start) / (float)_dbDefine.Procedures.Count;
                     int dtcount = 0;
-                    SetPro(85, "开始导入存储过程...");
+                    SetPro(process_start, "开始导入存储过程...");
                     foreach (IProcedureClass item in _dbDefine.Procedures)
                     {
                         dtcount++;
-                        SetPro(85 + (int)(dtcount * dd), "开始导入存储过程:" + item.Name);
+                        SetPro(process_start + (int)(dtcount * dd), "开始导入存储过程:" + item.Name);
                         CreateSqlDelegate action = MyDbHelper.GetCreateSqlFunction(item, dbClass.GetClassDbType());
                         List<CreateSqlObject> sqlObjs = action(tableSpaceName);
                         foreach (CreateSqlObject sql in sqlObjs)
@@ -880,24 +916,27 @@ namespace DbTool.DbClasses
                             }
                         }
                     }
-                    SetPro(90, "导入过程结束.");
+                    SetPro(process_end, "导入过程结束.");
                 }
             }
             #endregion
-            SetPro(90);
+            SetPro(process_end);
+
+            process_start = process_end;
+            process_end = 97;
             #region 导入函数
             if (isReadFunctions)
             {
-                SetPro(90, "待导入函数个数：" + _dbDefine.Functions.Count);
+                SetPro(process_start, "待导入函数个数：" + _dbDefine.Functions.Count);
                 if (_dbDefine.Functions.Count > 0)
                 {
-                    float dd = 5 / (float)_dbDefine.Functions.Count;
+                    float dd = (process_end - process_start) / (float)_dbDefine.Functions.Count;
                     int dtcount = 0;
-                    SetPro(90, "开始导入函数...");
+                    SetPro(process_start, "开始导入函数...");
                     foreach (IFunctionClass item in _dbDefine.Functions)
                     {
                         dtcount++;
-                        SetPro(90 + (int)(dtcount * dd), "开始导入函数:" + item.Name);
+                        SetPro(process_start + (int)(dtcount * dd), "开始导入函数:" + item.Name);
                         CreateSqlDelegate action = MyDbHelper.GetCreateSqlFunction(item, dbClass.GetClassDbType());
                         List<CreateSqlObject> sqlObjs = action(tableSpaceName);
                         foreach (CreateSqlObject sql in sqlObjs)
@@ -915,18 +954,21 @@ namespace DbTool.DbClasses
                             }
                         }
                     }
-                    SetPro(95, "导入函数结束.");
+                    SetPro(process_end, "导入函数结束.");
                 }
             }
             #endregion
-            SetPro(95);
+            SetPro(process_end);
+
+            process_start = process_end;
+            process_end = 100;
             #region 导入java资源
             if (isReadJavaSources)
             {
-                SetPro(95, "待导入Java资源个数：" + _dbDefine.JavaSources.Count);
+                SetPro(process_start, "待导入Java资源个数：" + _dbDefine.JavaSources.Count);
                 if (_dbDefine.JavaSources.Count > 0)
                 {
-                    float dd = 5 / (float)_dbDefine.JavaSources.Count;
+                    float dd = (process_end - process_start) / (float)_dbDefine.JavaSources.Count;
                     int dtcount = 0;
                     SetPro(95, "开始导入Java资源...");
                     foreach (IJavaSourceClass item in _dbDefine.JavaSources)
@@ -950,11 +992,11 @@ namespace DbTool.DbClasses
                             }
                         }
                     }
-                    SetPro(100, "导入Java资源结束.");
+                    SetPro(process_end, "导入Java资源结束.");
                 }
             }
             #endregion
-            SetPro(100, "导入结束.");
+            SetPro(process_end, "导入结束.");
         }
 
         public void Dispose()

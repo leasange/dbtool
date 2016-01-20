@@ -80,19 +80,11 @@ namespace DbTool
             {
                 try
                 {
-                    using (DbTFileWriter writer=new DbTFileWriter(this.tbPath.Text))
+                    using (DbTFileWriter writer = new DbTFileWriter(this.tbPath.Text))
                     {
                         writer.ProgressChanged += writer_ProgressChanged;
-                        writer.WriteDb(_dbClass, 
-                            cbTable.Checked,
-                            cbContras.Checked,
-                            cbSequence.Checked,
-                            cbTrigger.Checked,
-                            cbIndex.Checked,
-                            cbFunction.Checked,
-                            cbProcedure.Checked,
-                            cbJavaSource.Checked,
-                            cbData.Checked);
+                        DbClassSelected selected = dbClassSelected.DbClassSelected;
+                        writer.WriteDb(_dbClass, selected);
                         writer.ProgressChanged -= writer_ProgressChanged;
                     }
                 }

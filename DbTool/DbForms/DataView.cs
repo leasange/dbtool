@@ -41,8 +41,21 @@ namespace DbTool.DbForms
             {
                 length = 50;
             }
-            DataTable dt = _dbClass.GetDbHelper().ExecuteDataTable(_sql, start, length);
-            if (dt.Rows.Count<length)
+            DataTable dt=null;
+            if (_sql.Trim().StartsWith("select", true, null))
+            {
+                dt = _dbClass.GetDbHelper().ExecuteDataTable(_sql, start, length);
+            }
+            else
+            {
+                int ret = _dbClass.GetDbHelper().ExecuteSql(_sql);
+                dt = new DataTable();
+                dt.Columns.Add("结果", typeof(int));
+                DataRow dr = dt.NewRow();
+                dr[0] = ret;
+                dt.Rows.Add(dr);
+            }
+            if (dt.Rows.Count < length)
             {
                 isLast = true;
             }

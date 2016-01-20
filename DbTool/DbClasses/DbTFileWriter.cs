@@ -93,17 +93,7 @@ namespace DbTool.DbClasses
             }
         }
         #endregion
-        public void WriteDb(IDbClass dbClass,
-            bool isWriteTables = true,
-            bool isWriteConstraints = true,
-            bool isWriteSequences = true,
-            bool isWriteTriggers = true,
-            bool isWriteIndexes = true,
-            bool isWriteFunctions = true,
-            bool isWriteProcedures = true,
-            bool isWriteJavaSources = true,
-            bool isWriteDatas = true
-            )
+        public void WriteDb(IDbClass dbClass,DbClassSelected selected)
         {
             SetPro(0, "开始导出数据库类型...");
             BeginWrite(DbtFileTags.DbTFile);
@@ -116,7 +106,7 @@ namespace DbTool.DbClasses
             Write(dbClass.GetDbVersionString());
             EndWrite(DbtFileTags.Version);
             SetPro(2, "导出数据库类型结束！");
-            if (isWriteTables)
+            if (selected.isTablesChecked)
             {
                 SetPro(2, "开始获取表...");
                 //写入表
@@ -138,7 +128,7 @@ namespace DbTool.DbClasses
                 }
             }
             SetPro(25, "");
-            if (isWriteConstraints)
+            if (selected.isConstraintsChecked)
             {
                 SetPro(25, "开始获取约束...");
                 //写入约束
@@ -160,7 +150,7 @@ namespace DbTool.DbClasses
                 }
             }
             SetPro(35, "");
-            if (isWriteSequences)
+            if (selected.isSequencesChecked)
             {
                 SetPro(35, "开始获取序列...");
                 //写入序列
@@ -182,7 +172,7 @@ namespace DbTool.DbClasses
                 }
             }
             SetPro(40, "");
-            if (isWriteTriggers)
+            if (selected.isTriggersChecked)
             {
                 SetPro(40, "开始获取触发器...");
                 //写入触发器
@@ -204,7 +194,7 @@ namespace DbTool.DbClasses
                 }
             }
             SetPro(44, "");
-            if (isWriteIndexes)
+            if (selected.isIndexesChecked)
             {
                 SetPro(44, "开始获取索引...");
                 //写入索引
@@ -226,7 +216,7 @@ namespace DbTool.DbClasses
                 }
             }
             SetPro(47, "");
-            if (isWriteFunctions)
+            if (selected.isFunctionsChecked)
             {
                 SetPro(47, "开始获取函数...");
                 //写入函数
@@ -248,7 +238,7 @@ namespace DbTool.DbClasses
                 }
             }
             SetPro(50, "");
-            if (isWriteProcedures)
+            if (selected.isProceduresChecked)
             {
                 SetPro(50, "开始获取过程...");
                 //写入过程
@@ -270,7 +260,7 @@ namespace DbTool.DbClasses
                 }
             }
             SetPro(52, "");
-            if (isWriteJavaSources)
+            if (selected.isJavaSourcesChecked)
             {
                 SetPro(52, "开始获取java资源...");
                 //写入Java资源
@@ -294,7 +284,7 @@ namespace DbTool.DbClasses
             SetPro(54, "");
             int perleft = 100 - 54;
 
-            if (isWriteDatas)
+            if (selected.isDatasChecked)
             {
                 SetPro(54, "开始导出数据...");
                 //写入数据
@@ -307,7 +297,13 @@ namespace DbTool.DbClasses
                     foreach (ITableClass item in tables)
                     {
                         tcount++;
-                        SetPro(54 + (int)(tcount * dper), "开始导出表:" + item.TableName + " 的数据...");
+                        decimal totalDataCount = dbClass.GetTableDataCount(item.TableName);
+                        SetPro(54 + (int)(tcount * dper), "开始导出表:" + item.TableName + " 的数据...，需导出总数:" + totalDataCount);
+                        if (totalDataCount==0)
+                        {
+                            SetPro(-1, "表 " + item.TableName + " 无数据导出！");
+                            continue;
+                        }
                         List<DbData> list = dbClass.GetTableData(item.TableName, 0, 50);
                         if (list.Count > 0)
                         {
@@ -328,6 +324,10 @@ namespace DbTool.DbClasses
                             BeginWrite(DbtFileTags.DataCulumnName);
                             Write(list[0].TableDataRow.tableColumnNames);
                             EndWrite(DbtFileTags.DataCulumnName);
+
+                            BeginWrite(DbtFileTags.DataCount);
+                            Write(totalDataCount);
+                            EndWrite(DbtFileTags.DataCount);
 
                             int start = 0;
                             do
@@ -352,7 +352,6 @@ namespace DbTool.DbClasses
                             EndWrite(DbtFileTags.Data);
                         }
                     }
-
                     EndWrite(DbtFileTags.Datas);
                 }
             }

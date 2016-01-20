@@ -135,7 +135,7 @@ namespace DbTool.DbClasses
             }
             else
                 sb.AppendLine("create index " + index_name + " on " + table_name + " (" + cols + ")");
-            sb.Append(GetNoTopLineOracleSql());
+            sb.Append(GetNoTopLineOracleSql(tableSpace));
             CreateSqlObject obj = new CreateSqlObject(sb.ToString(), "创建表" + table_name + "索引" + index_name);
             return new List<CreateSqlObject> { obj };
         }

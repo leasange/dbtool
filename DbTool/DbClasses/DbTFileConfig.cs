@@ -26,6 +26,22 @@ namespace DbTool.DbClasses
         }
     }
 
+    [Serializable]
+    public class DbClassSelected
+    {
+        public bool isTablesChecked = true;
+        public bool isConstraintsChecked = true;
+        public bool isSequencesChecked = true;
+        public bool isTriggersChecked = true;
+        public bool isIndexesChecked = true;
+        public bool isFunctionsChecked = true;
+        public bool isProceduresChecked = true;
+        public bool isJavaSourcesChecked = true;
+        public bool isViewsChecked = true;
+        public bool isJobsChecked = true;
+        public bool isDatasChecked = true;
+    }
+
     public class DbtFile
     {
         public static string TagStartFormat = "<DBS_{0}>";
@@ -72,12 +88,17 @@ namespace DbTool.DbClasses
         Procedure,
         JavaSources,
         JavaSource,
+        Views,
+        View,
+        Jobs,
+        Job,
         Datas,
         Data,
         DataTableName,
         DataCulumnName,
         DataColumnDbType,
         DataColumnType,
+        DataCount,
         DataValue,
     }
 }

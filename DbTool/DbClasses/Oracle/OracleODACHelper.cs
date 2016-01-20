@@ -24,7 +24,7 @@ namespace DbTool.DbClasses.Oracle
         private OracleConnection _connection = null;
         public OracleODACHelper()
         {
-
+            
         }
         public OracleODACHelper(string connectionString)
         {

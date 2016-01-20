@@ -29,7 +29,7 @@ namespace DbTool
                 text = tbSql.TextEditor.SelectedText;
             }
             text = text.Trim();
-            text = text.TrimEnd(';',' ');
+            //text = text.TrimEnd(';',' ');
             if (string.IsNullOrWhiteSpace(text))
             {
                 MessageBox.Show("输入/选择SQL为空！");

@@ -143,6 +143,12 @@ namespace DbTool
                                 case SourceTree.TreeNodeType.JAVASOURCE:
                                     text += "JAVA资源";
                                     break;
+                                case SourceTree.TreeNodeType.JOB:
+                                    text += "事务";
+                                    break;
+                                case SourceTree.TreeNodeType.VIEW:
+                                    text += "视图";
+                                    break;
                                 default:
                                     break;
                             }

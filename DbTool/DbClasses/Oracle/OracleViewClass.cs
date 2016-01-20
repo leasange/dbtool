@@ -62,7 +62,20 @@ namespace DbTool.DbClasses.Oracle
 
         public List<NameAliasValue> GetAttributes()
         {
-            throw new NotImplementedException();
+            List<NameAliasValue> navs = new List<NameAliasValue>();
+            navs.Add(new NameAliasValue()
+            {
+                Name = "view_name",
+                AliasName = "名称",
+                Value = view_name
+            });
+            navs.Add(new NameAliasValue()
+            {
+                Name = "text",
+                AliasName = "内容",
+                Value = text
+            });
+            return navs;
         }
     }
 }

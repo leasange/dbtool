@@ -50,7 +50,7 @@ namespace DbTool.DbClasses
         {
             get 
             {
-                DoLoadConstraints();
+               // DoLoadConstraints();
                 return constraints;
             }
         }
