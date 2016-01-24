@@ -65,6 +65,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbClasses\DbConnectionPool.cs" />
     <Compile Include="DbClasses\DbDefinition.cs" />
     <Compile Include="DbClasses\DbTFileConfig.cs" />
     <Compile Include="DbClasses\DbTFileReader.cs" />
@@ -259,7 +260,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy $(SolutionDir)libs\odac12c  /d /r /k $(SolutionDir)bin\$(ConfigurationName)</PostBuildEvent>
+    <PostBuildEvent>xcopy $(SolutionDir)libs\odac12c  /d /r /k /v /y $(SolutionDir)bin\$(ConfigurationName)</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

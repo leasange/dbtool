@@ -7,7 +7,7 @@ using System.Data;
 
 namespace DbTool.DbClasses.Oracle
 {
-    public class OracleODACHelper:IDbHelper
+    public class OracleODACHelper:DbConnectionPool<OracleConnection>,IDbHelper
     {
         private string _connectString = null;
         public string ConnectString
@@ -95,7 +95,6 @@ namespace DbTool.DbClasses.Oracle
         public int ExecuteSql(string sql, params object[] prms)
         {
             CheckConnectEx();
-           // Console.WriteLine("ExecuteSql:\r\n" + sql);
             OracleCommand cmd = PrepareCommand(null, CommandType.Text, sql, (OracleParameter[])prms);
             int rows = cmd.ExecuteNonQuery();
             cmd.Parameters.Clear();
@@ -105,11 +104,14 @@ namespace DbTool.DbClasses.Oracle
         {
             CheckConnectEx();
             DataSet ds = new DataSet();
-            using (OracleDataAdapter da = new OracleDataAdapter(sql, _connection))
-            {
-                da.Fill(ds,"ds");
-                return ds;
-            }
+            ExcuteUsePool((conn) =>
+                {
+                    using (OracleDataAdapter da = new OracleDataAdapter(sql, _connection))
+                    {
+                        da.Fill(ds, "ds");
+                    }
+                });
+            return ds;
         }
         /// <summary>
         /// 执行数据库命令前的准备工作
@@ -199,6 +201,13 @@ namespace DbTool.DbClasses.Oracle
             string newsql = GetPageSql(sql, start, length);
             DataTable dt = ExecuteDataTable(newsql, prms);
             return GetPageTable(dt);
+        }
+
+        protected override OracleConnection CreateConnection()
+        {
+            OracleConnection conn = new OracleConnection(_connectString);
+            conn.Open();
+            return conn;
         }
     }
 }
