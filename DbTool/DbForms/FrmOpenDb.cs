@@ -133,7 +133,7 @@ namespace DbTool.DbForms
             }
             try
             {
-                _dbClass = this.DbConnectConfigure.GetDbClass();
+                _dbClass = this.DbConnectConfigure.GetDbClass();            
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
